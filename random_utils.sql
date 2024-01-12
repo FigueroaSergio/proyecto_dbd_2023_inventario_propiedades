@@ -96,3 +96,25 @@ BEGIN
     v_ciudad := random_ciudad;
     dbms_output.put_line('Ciudad: '|| v_ciudad);
 END;
+
+CREATE OR REPLACE FUNCTION random_material
+RETURN VARCHAR2
+IS
+    v_material varchar2(100);
+    v_random number;
+BEGIN
+    v_random := round(dbms_random.value(0,47),0);
+    SELECT material
+    INTO v_material
+    from materiales
+    offset v_random rows
+    FETCH NEXT 1 ROWS ONLY;
+    RETURN v_material;
+END;
+/
+DECLARE
+ v_ciudad VARCHAR2(30);
+BEGIN
+    v_ciudad := random_material;
+    dbms_output.put_line('Material: '|| v_ciudad);
+END;
